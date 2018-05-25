@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sanrxteam.mybatis.dao.impl.ComputerDaoImpl">
+<sql id="common">
+	computerName,price
+</sql>
+	<select id="getAllComputer" resultType="map">
+		Select * from computers
+	</select>
+	<select id="getComputerByCommon" resultType="map" parameterType="map">
+		Select <include refid="common"/> from computers
+		<where>
+		<if test="computerName != null">
+			computerName = #{computerName}
+		</if>
+		<if test="runMem != null">
+			and runMem = #{runMem}
+		</if>
+		<if test="brand != null">
+			and brand = #{brand}
+		</if>
+		<!-- 
+		&gt;  大于
+		&lt;  小于
+		 -->
+		<if test="price != null">
+			and price &lt; #{price}
+		</if>
+		
+		</where>
+	
+	</select>
+</mapper>

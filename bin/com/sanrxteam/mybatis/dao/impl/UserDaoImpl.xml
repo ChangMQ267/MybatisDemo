@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sanrxteam.mybatis.dao.impl.UserDaoImpl">
+	<sql id="common">
+		username,password
+	</sql>
+	<select id="getAllUser" resultType="User">
+		Select
+		<include refid="common" />
+		from users
+	</select>
+	<select id="getUserById" resultType="map" parameterType="Long">
+		Select
+		<include refid="common" />
+		from users where id=#{0}
+	</select>
+	<select id="getUserByCondition" resultType="Map"
+		parameterType="Map">
+		select
+		<include refid="common" />
+		from users where username = #{username} and
+		password = #{password}
+	</select>
+	<select id="getUserByMh" resultType="map" parameterType="map">
+		select
+		<include refid="common" />
+		from users where username like concat('%',#{username},'%')
+	</select>
+	<insert id="addUser" parameterType="map">
+		insert into users set username = #{username} , password = #{password}
+	</insert>
+</mapper>
